@@ -33,7 +33,7 @@ def count_solutions(board, limit=2):
         nonlocal count
         if count >= limit:
             return
-        empty = _find_empty(b)
+        empty = find_empty(b)
         if not empty:
             count += 1
             return
