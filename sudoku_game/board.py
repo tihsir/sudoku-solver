@@ -1,22 +1,11 @@
 import random
 from copy import deepcopy
-from sudoku.solver import solve
+from sudoku_game.solver import solve, has_unique_solution
+from sudoku_game.validator import is_valid
+
 
 def generate_empty_board():
     return [[0 for _ in range(9)] for _ in range(9)]
-
-def is_valid(board, row, col, num):
-    for i in range(9):
-        if board[row][i] == num or board[i][col] == num:
-            return False
-
-    start_row, start_col = 3 * (row // 3), 3 * (col // 3)
-    for i in range(3):
-        for j in range(3):
-            if board[start_row+i][start_col+j] == num:
-                return False
-
-    return True
 
 def fill_board(board):
     for row in range(9):
@@ -57,23 +46,23 @@ def remove_cells(board, num_clues):
                 cells_to_remove -= 1
     return puzzle
 
-def has_unique_solution(board):
-    solutions = []
+# def has_unique_solution(board):
+#     solutions = []
 
-    def solve_with_count(b):
-        for r in range(9):
-            for c in range(9):
-                if b[r][c] == 0:
-                    for n in range(1, 10):
-                        if is_valid(b, r, c, n):
-                            b[r][c] = n
-                            solve_with_count(b)
-                            b[r][c] = 0
-                    return
-        solutions.append(deepcopy(b))
+#     def solve_with_count(b):
+#         for r in range(9):
+#             for c in range(9):
+#                 if b[r][c] == 0:
+#                     for n in range(1, 10):
+#                         if is_valid(b, r, c, n):
+#                             b[r][c] = n
+#                             solve_with_count(b)
+#                             b[r][c] = 0
+#                     return
+#         solutions.append(deepcopy(b))
 
-    solve_with_count(deepcopy(board))
-    return len(solutions) == 1
+#     solve_with_count(deepcopy(board))
+#     return len(solutions) == 1
 
 def generate_puzzle(difficulty='medium'):
     full = generate_full_board()
